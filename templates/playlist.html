@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ playlist[0] }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav>
+    <div class="logo">TheWave</div>
+
+    <div class="menu">
+        <a href="{{ url_for('accueil') }}">Accueil</a>
+        <a href="{{ url_for('recherche') }}">Recherche</a>
+        <a href="{{ url_for('profil') }}">Profil</a>
+        <a href="{{ url_for('suggestions') }}">Suggestions</a>
+    </div>
+
+    <a class="logout" href="{{ url_for('deconnexion') }}">Déconnexion</a>
+</nav>
+
+<h1>{{ playlist[0] }}</h1>
+<p>{{ playlist[1] if playlist[1] else "Pas de description" }}</p>
+<p>Propriétaire : {{ playlist[3] }}</p>
+<p>Visibilité : {% if playlist[2] %}Publique{% else %}Privée{% endif %}</p>
+
+<h2>Pistes</h2>
+{% if pistes %}
+<ul>
+    {% for id, titre in pistes %}
+    <li><a href="{{ url_for('morceau', id_piste=id) }}">{{ titre }}</a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Aucune piste dans cette playlist.</p>
+{% endif %}
+
+<a href="{{ url_for('recherche') }}">← Retour à la recherche</a>
+</body>
+</html>

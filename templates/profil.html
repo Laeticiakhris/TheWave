@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil - {{ pseudonyme }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body>
+
+<nav>
+    <div class="logo">TheWave</div>
+
+    <div class="menu">
+        <a href="{{ url_for('accueil') }}">Accueil</a>
+        <a href="{{ url_for('recherche') }}">Recherche</a>
+        <a href="{{ url_for('profil') }}">Profil</a>
+        <a href="{{ url_for('suggestions') }}">Suggestions</a>
+    </div>
+
+    <a class="logout" href="{{ url_for('deconnexion') }}">Déconnexion</a>
+</nav>
+
+<div class="container">
+
+
+    <h1 style="text-align:center; margin-bottom:40px;">Profil de {{ pseudonyme }}</h1>
+
+
+    <div class="section">
+        <h2>Vos morceaux les plus écoutés</h2>
+        {% if top_morceaux %}
+        <ul>
+            {% for id_piste, titre, nb in top_morceaux %}
+<li><a href="{{ url_for('morceau', id_piste=id_piste) }}" class="playlist-link">{{ titre }}</a> — <span style="color:#1db954;">{{ nb }} écoutes</span></li>
+{% endfor %}
+        </ul>
+        {% else %}
+        <p>Aucun morceau écouté récemment.</p>
+        {% endif %}
+    </div>
+
+
+    <div class="section">
+        <h2>Historique des dernières écoutes</h2>
+        {% if historique %}
+        <ul>
+          {% for id_piste, titre, date in historique %}
+<li>{{ date }} : <b><a href="{{ url_for('morceau', id_piste=id_piste) }}" class="playlist-link">{{ titre }}</a></b></li>
+{% endfor %}
+        </ul>
+        {% else %}
+        <p>Aucune écoute récente.</p>
+        {% endif %}
+    </div>
+
+
+    <div class="section">
+        <h2>Actualités des groupes que vous suivez</h2>
+        {% if actu_groupes %}
+        <ul>
+{% for id_album, album_titre, groupe_nom, date_parution, id_groupe in actu_groupes %}
+<li>
+    <b><a href="{{ url_for('album', id_album=id_album) }}">{{ album_titre }}</a></b> 
+    par <a href="{{ url_for('groupe', id_groupe=id_groupe) }}">{{ groupe_nom }}</a> ({{ date_parution }})
+</li>
+{% endfor %}
+        </ul>
+        {% else %}
+        <p>Aucune actualité pour vos groupes suivis.</p>
+        {% endif %}
+    </div>
+
+  
+    <div class="section">
+        <h2>Actualités des utilisateurs que vous suivez</h2>
+        {% if actu_utilisateurs %}
+        <ul>
+            {% for user, pl, id_playlist in actu_utilisateurs %}
+            <li>{{ user }} → Playlist : 
+                <b><a href="{{ url_for('playlist', id_playlist=id_playlist) }}" class="playlist-link">{{ pl }}</a></b>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Aucune actualité pour les utilisateurs suivis.</p>
+        {% endif %}
+    </div>
+
+
+    <div class="section">
+        <h2>Vos playlists</h2>
+        {% if mes_playlists %}
+        <ul>
+            {% for titre, desc, vis in mes_playlists %}
+<li>
+    {{ titre }} : {{ "Publique" if vis else "Privée" }}
+    <a href="{{ url_for('profil_playlists') }}" class="playlist-link">Éditer</a>
+</li>
+{% endfor %}
+        </ul>
+        {% else %}
+        <p>Vous n’avez pas encore de playlist.</p>
+        {% endif %}
+        <ul>
+            <li><a href="{{ url_for('profil_playlists') }}" class="playlist-link">----> Créer une nouvelle playlist</a></li>
+        </ul>
+    </div>
+
+</div>
+
+</body>
+</html>

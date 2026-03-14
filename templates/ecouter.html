@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Écoute en cours</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container" style="text-align:center; margin-top:80px;">
+    <h1> Vous êtes en train d’écouter :</h1>
+    <h2 style="color:#1db954;">{{ titre }}</h2>
+
+    <p>L’écoute a été ajoutée à votre historique.</p>
+
+    <a href="{{ request.referrer or url_for('accueil') }}" class="btn">⬅ Retour</a>
+</div>
+
+</body>
+</html>

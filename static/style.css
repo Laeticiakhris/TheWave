@@ -1,0 +1,252 @@
+body {
+    background: linear-gradient(180deg, #0f0f0f, #181818);
+    color: #fff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* --- NAVBAR --- */
+nav {
+    background: rgba(15, 15, 15, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 18px 30px;
+    display: flex;
+    justify-content: space-between;   /* Logo à gauche + menu à droite */
+    align-items: center;
+    gap: 40px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid #222;
+}
+
+/* LOGO */
+nav .logo {
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #1db954;
+}
+
+/* MENU ALIGNÉ EN LIGNE */
+nav .menu {
+    display: flex;
+    gap: 20px;                  /* ESPACEMENT ENTRE LES LIENS */
+    align-items: center;
+}
+
+nav .menu a {
+    color: #eaeaea;
+    text-decoration: none;      /* pas souligné */
+    font-size: 17px;
+    transition: 0.25s ease-in-out;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+}
+
+nav .menu a:hover {
+    color: #1db954;
+    border-bottom: 2px solid #1db954;
+}
+
+/* BOUTON DECONNEXION */
+nav .logout {
+    background: #e63946;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    transition: 0.25s;
+}
+
+nav .logout:hover {
+    background: #c62835;
+}
+
+/* --- CONTENU --- */
+.container {
+    width: 75%;
+    margin: 40px auto 70px;
+}
+        .subtitle {
+            color: #ccc;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+h1 {
+    font-size: 34px;
+    margin-bottom: 40px;
+    text-shadow: 0 0 8px #000;
+}
+
+h2 {
+    color: #1db954;
+    margin-bottom: 20px;
+    font-size: 25px;
+    text-shadow: 0 0 5px #000;
+}
+
+form input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #2c2c2c;
+    color: #fff;
+}
+
+form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1db954;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+form button:hover {
+    background-color: #1ed760;
+}
+.type-filters a {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: #fff;
+    text-decoration: none;
+    background-color: #2c2c2c;
+    transition: background 0.2s;
+}
+
+.type-filters a:hover {
+    background-color: #1db954;
+}
+
+.type-filters a.active {
+    background-color: #1db954;
+    font-weight: bold;
+}
+
+.section {
+    background: #1d1d1d;
+    padding: 25px;
+    border-radius: 14px;
+    margin-bottom: 35px;
+    box-shadow: 0 0 20px #0006;
+    transition: 0.3s ease-in-out;
+}
+
+.section:hover {
+    box-shadow: 0 0 30px #0009;
+    transform: scale(1.01);
+}
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+li {
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+.actions button { margin-left: 5px; }
+        .back-link { display: inline-block; margin-top: 20px; text-decoration: none; color: #1db954; font-weight: bold; }
+        .back-link:hover { text-decoration: underline; }
+        form { margin-bottom: 30px;
+        gap: 18px; }
+        input[type="text"] { padding: 8px; width: 250px; margin-right: 10px; }
+    input[type="checkbox"] {
+        margin-left: 10px; 
+        gap:18px;
+        padding: 10px 12px;}
+
+
+        .section {
+            background: #1e1e1e;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 10px #0006;
+        }
+
+
+li a {
+    text-decoration: none;
+    color: #fff;
+    transition: 0.2s;
+}
+
+li a:hover {
+    color: #1db954;
+}
+
+p {
+    color:#eaeaea
+}
+        table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+	color:#fff;
+}
+
+th {
+    background-color: #2c2c2c;
+    color: #fff;
+}
+
+tr:hover {
+    background-color: #282828;
+}
+
+td a:hover {
+    color: #1db954;
+    border-bottom: 2px solid #1db954;
+}
+td a:focus {
+    outline: 2px solid #1db954;
+    outline-offset: 2px;
+}
+nav .menu a {
+    color: #eaeaea;
+    text-decoration: none;     
+    font-size: 17px;
+    transition: 0.25s ease-in-out;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+}
+td a {
+    color:white;
+    text-decoration: none;
+
+}
+.group-link {
+    color: #fff;             /* blanc par défaut */
+    text-decoration: none;    /* pas de soulignement */
+    transition: 0.2s;
+}
+
+.group-link:hover {
+    color: #1db954;           /* vert sur hover */
+}

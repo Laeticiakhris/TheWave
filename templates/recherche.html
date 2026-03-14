@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Recherche</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav>
+    <div class="logo">TheWave</div>
+
+    <div class="menu">
+        <a href="{{ url_for('accueil') }}">Accueil</a>
+        <a href="{{ url_for('recherche') }}">Recherche</a>
+        <a href="{{ url_for('profil') }}">Profil</a>
+        <a href="{{ url_for('suggestions') }}">Suggestions</a>
+    </div>
+
+    <a class="logout" href="{{ url_for('deconnexion') }}">Déconnexion</a>
+</nav>
+<h2>Recherche</h2>
+
+<!-- FORMULAIRE -->
+<form method="POST" style="text-align:center; margin-bottom: 20px;">
+    <input type="text" name="terme" value="{{ terme }}" placeholder="Rechercher..." style="width: 70%; padding: 10px; font-size: 16px;">
+    <button type="submit" class="btn">Rechercher</button>
+</form>
+
+<!-- FILTRES TYPE -->
+<div class="type-filters" style="text-align:center; margin: 15px 0;">
+    <a href="{{ url_for('recherche', terme=terme, type='all') }}" class="{% if type_filter=='all' %}active{% endif %}">Tout</a>
+    <a href="{{ url_for('recherche', terme=terme, type='morceaux') }}" class="{% if type_filter=='morceaux' %}active{% endif %}">Morceaux</a>
+    <a href="{{ url_for('recherche', terme=terme, type='albums') }}" class="{% if type_filter=='albums' %}active{% endif %}">Albums</a>
+    <a href="{{ url_for('recherche', terme=terme, type='playlists') }}" class="{% if type_filter=='playlists' %}active{% endif %}">Playlists</a>
+</div>
+
+
+{% if resultats_morceaux or result_album or result_playlists %}
+<table>
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for m in resultats_morceaux %}
+        <tr>
+            <td><a href="{{ url_for('morceau', id_piste=m[0]) }}">{{ m[1] }}</a></td>
+            <td>Morceau</td>
+        </tr>
+        {% endfor %}
+
+        {% for a in result_album %}
+        <tr>
+            <td><a href="{{ url_for('album', id_album=a[0]) }}">{{ a[1] }}</a></td>
+            <td>Album</td>
+        </tr>
+        {% endfor %}
+
+        {% for p in result_playlists %}
+        <tr>
+            <td><a href="{{ url_for('playlist', id_playlist=p[0]) }}">{{ p[1] }}</a></td>
+            <td>Playlist</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p style="text-align:center; margin-top:20px;">Aucun résultat trouvé pour « {{ terme }} »</p>
+{% endif %}
+
+</body>
+</html>

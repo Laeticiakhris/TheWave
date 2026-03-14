@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ morceau[0] }} - Détails du morceau</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+<nav>
+    <div class="logo">TheWave</div>
+    <div class="menu">
+        <a href="{{ url_for('accueil') }}">Accueil</a>
+        <a href="{{ url_for('recherche') }}">Recherche</a>
+        <a href="{{ url_for('profil') }}">Profil</a>
+        <a href="{{ url_for('suggestions') }}">Suggestions</a>
+    </div>
+    <a class="logout" href="{{ url_for('deconnexion') }}">Déconnexion</a>
+</nav>
+
+<div class="container">
+
+
+    <div class="section" style="display:flex; align-items:center; gap:30px;">
+        {% if morceau[5] %}
+            <img src="{{ url_for('static', filename=morceau[5]) }}" alt="Image du morceau" style="width:200px; height:200px; object-fit:cover; border-radius:12px;">
+        {% else %}
+            <img src="{{ url_for('static', filename='default_album.png') }}" alt="Image du morceau" style="width:200px; height:200px; object-fit:cover; border-radius:12px;">
+        {% endif %}
+        <div>
+            <h1>{{ morceau[0] }}</h1>
+            <p><strong>Album :</strong> {{ morceau[3] }}</p>
+            <p><strong>Date de parution :</strong> {{ morceau[4] }}</p>
+            <p><strong>Durée :</strong> {{ morceau[2] }} sec</p>
+            <p><strong>Nombre d'écoutes :</strong> {{ nb_ecoutes }}</p>
+            <a href="{{ url_for('ecouter', id_piste=id_piste) }}" class="btn">▶ Écouter ce morceau</a>
+        </div>
+    </div>
+
+
+    <h2 class="section-title">Artistes participants</h2>
+    {% if artistes %}
+    <div class="member-list" style="display:flex; gap:20px; flex-wrap:wrap;">
+        {% for a in artistes %}
+        <div class="member-card" style="text-align:center;">
+            {% if a[3] %}
+                <img src="{{ url_for('static', filename=a[3]) }}" alt="Photo artiste" style="width:150px; height:150px; object-fit:cover; border-radius:12px;">
+            {% else %}
+                <img src="{{ url_for('static', filename='default_artist.png') }}" alt="Photo artiste" style="width:150px; height:150px; object-fit:cover; border-radius:12px;">
+            {% endif %}
+            <p><b>{{ a[2] }} {{ a[1] }}</b></p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>Aucun artiste trouvé.</p>
+    {% endif %}
+
+
+    <h2 class="section-title">Groupes interprètes</h2>
+    {% if groupes %}
+    <div class="group-list" style="display:flex; gap:20px; flex-wrap:wrap;">
+        {% for g in groupes %}
+        <div class="group-card" style="text-align:center;">
+           <ul><li><a href="{{ url_for('groupe', id_groupe=g[2]) }}">{{ g[0] }}   - Genre {{ g[1] }}</a>
+         </li></ul>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>Aucun groupe trouvé.</p>
+    {% endif %}
+
+    <!-- Paroles -->
+    <h2 class="section-title">Paroles</h2>
+    <div class="section">
+        {% if morceau[1] %}
+        <pre style="white-space:pre-wrap;">{{ morceau[1] }}</pre>
+        {% else %}
+        <p>Aucune parole disponible.</p>
+        {% endif %}
+    </div>
+
+</div>
+</body>
+</html>

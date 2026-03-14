@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ groupe[1] }} - Détails du groupe</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav>
+    <div class="logo">TheWave</div>
+    <div class="menu">
+        <a href="{{ url_for('accueil') }}">Accueil</a>
+        <a href="{{ url_for('recherche') }}">Recherche</a>
+        <a href="{{ url_for('profil') }}">Profil</a>
+        <a href="{{ url_for('suggestions') }}">Suggestions</a>
+    </div>
+    <a class="logout" href="{{ url_for('deconnexion') }}">Déconnexion</a>
+</nav>
+
+<div class="container">
+
+
+    <div class="section" style="display:flex; align-items:center; gap:30px;">
+        {% if groupe[3] %}
+            <img src="{{ url_for('static', filename=groupe[3]) }}" alt="Image du groupe" style="width:200px; height:200px; object-fit:cover; border-radius:12px;">
+        {% else %}
+            <img src="{{ url_for('static', filename='default_group.png') }}" style="width:200px; height:200px; object-fit:cover; border-radius:12px;">
+        {% endif %}
+        <div>
+            <h1>{{ groupe[1] }}</h1>
+            <p><b>Genre :</b> {{ groupe[2] }}</p>
+            {% if groupe[4] %}
+                <p><b>Nationalité :</b> {{ groupe[4] }}</p>
+            {% endif %}
+            {% if groupe[5] %}
+                <p><b>Création :</b> {{ groupe[5] }}</p>
+            {% endif %}
+            <p><b>Abonnés :</b> {{ nb_followers }}</p>
+        </div>
+    </div>
+
+ 
+    <h2 class="section-title">Membres actuels</h2>
+    {% if membres_actu %}
+        <div class="member-list" style="display:flex; gap:20px; flex-wrap:wrap;">
+            {% for m in membres_actu %}
+            <div class="member-card" style="text-align:center;">
+                {% if m[2] %}
+                    <img src="{{ url_for('static', filename=m[2]) }}" 
+                         alt="Photo artiste" 
+                         style="width:150px; height:150px; object-fit:cover; border-radius:12px;">
+                {% else %}
+                    <img src="{{ url_for('static', filename='default_artist.png') }}" 
+                         alt="Photo artiste" 
+                         style="width:150px; height:150px; object-fit:cover; border-radius:12px;">
+                {% endif %}
+                <p><b>{{ m[0] }} {{ m[1] }}</b></p>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Aucun membre actuel.</p>
+    {% endif %}
+
+
+    <h2 class="section-title">Membres passés</h2>
+    {% if membres_passé %}
+        <div class="member-list" style="display:flex; gap:20px; flex-wrap:wrap;">
+            {% for m in membres_passé %}
+            <div class="member-card" style="text-align:center;">
+                {% if m[2] %}
+                    <img src="{{ url_for('static', filename=m[2]) }}" 
+                         alt="Photo artiste" 
+                         style="width:150px; height:150px; object-fit:cover; border-radius:12px;">
+                {% else %}
+                    <img src="{{ url_for('static', filename='default_artist.png') }}" 
+                         alt="Photo artiste" 
+                         style="width:150px; height:150px; object-fit:cover; border-radius:12px;">
+                {% endif %}
+                <p><b>{{ m[0] }} {{ m[1] }}</b></p>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Aucun membre passé.</p>
+    {% endif %}
+
+
+    <h2 class="section-title">Albums</h2>
+    <div class="section" style="display:flex; flex-wrap:wrap; gap:20px;">
+        {% if albums %}
+            {% for a in albums %}
+                <div style="flex: 0 0 180px; text-align:center;">
+                    <a href="{{ url_for('album', id_album=a[0]) }}">
+                        {% if a[3] %}
+                            <img src="{{ url_for('static', filename=a[3]) }}" alt="Pochette album" style="width:180px; height:180px; object-fit:cover; border-radius:12px;">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='default_album.png') }}" style="width:180px; height:180px; object-fit:cover; border-radius:12px;">
+                        {% endif %}
+                        <p>{{ a[1] }}</p>
+                        <p>({{ a[2] }})</p>
+                    </a>
+                    <a class="btn" href="{{ url_for('ecouter_album', id_album=a[0]) }}" style="margin-top:5px;">▶ Écouter</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Aucun album disponible.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

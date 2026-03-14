@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Accueil - TheWave</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">TheWave</div>
+    <div class="menu">
+        <a href="{{ url_for('accueil') }}">Accueil</a>
+        <a href="{{ url_for('recherche') }}">Recherche</a>
+        <a href="{{ url_for('profil') }}">Profil</a>
+        <a href="{{ url_for('suggestions') }}">Suggestions</a>
+    </div>
+    <a class="logout" href="{{ url_for('deconnexion') }}">Déconnexion</a>
+</nav>
+
+<header class="hero" style="text-align:center; padding:60px 20px;">
+    <h1>Bienvenue sur TheWave</h1>
+    <p>Tes nouveautés, tes sons, tes artistes.</p>
+</header>
+
+<main class="container">
+
+
+    <section class="section">
+        <h2>🎵 Derniers albums</h2>
+        <div class="grid" style="display:flex; flex-wrap:wrap; gap:20px;">
+            {% for album in derniers_albums %}
+            <div class="card section" style="flex:1 1 250px; padding:20px; text-align:center;">
+                {% if album[3] %}
+                <img src="{{ url_for('static', filename=album[3]) }}" alt="Cover de {{ album[0] }}" style="width:100%; max-width:200px; border-radius:12px; margin-bottom:10px;">
+                {% endif %}
+                <h3><a href="{{ url_for('album', id_album=album[4]) }}" class="album-link">{{ album[0] }}</a></h3>
+                <p class="subtitle">{{ album[1] }}</p>
+                <p class="date">{{ album[2] }}</p>
+                <a class="btn" href="{{ url_for('album', id_album=album[4]) }}">▶ Écouter l'album</a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+
+    <section class="section">
+        <h2>Groupes populaires</h2>
+        <div class="grid" style="display:flex; flex-wrap:wrap; gap:20px;">
+            {% for g in groupe_populaires %}
+            <div class="card section" style="flex:1 1 250px; padding:20px; text-align:center;">
+                {% if g[2] %}
+                <img src="{{ url_for('static', filename=g[2]) }}" alt="image de {{ g[0] }}" style="width:100%; max-width:200px; border-radius:12px; margin-bottom:10px;">
+                {% endif %}
+                <h3><a href="{{ url_for('groupe', id_groupe=g[3]) }}" class="group-link">{{ g[0] }}</a></h3>
+                <p class="subtitle">{{ g[1] }} personnes qui le suivent</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+
+    <section class="section">
+        <h2>Pistes populaires cette semaine</h2>
+        <div class="grid" style="display:flex; flex-wrap:wrap; gap:20px;">
+            {% for p in pistes_popu %}
+            <div class="card section" style="flex:1 1 250px; padding:20px; text-align:center;">
+                <h3><a href="{{ url_for('morceau', id_piste=p[2]) }}" class="group-link">{{ p[0] }}</a></h3>
+                <p class="subtitle">{{ p[1] }} écoutes</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+</main>
+
+</body>
+</html>

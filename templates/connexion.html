@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion - TheWave</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container" style="max-width:420px; margin-top:100px;">
+
+    <div class="section">
+        <h1 style="text-align:center;">Connexion</h1>
+
+        {% if message %}
+            <p style="color:#e63946; text-align:center; font-weight:bold;">
+                {{ message }}
+            </p>
+        {% endif %}
+
+        <form action="{{ url_for('connexion') }}" method="POST" style="display:flex; flex-direction:column; gap:15px;">
+            <input type="text"
+                   name="pseudonyme"
+                   placeholder="Pseudonyme"
+                   required>
+
+            <input type="password"
+                   name="mot_de_passe"
+                   placeholder="Mot de passe"
+                   required>
+
+            <button type="submit">Se connecter</button>
+        </form>
+
+        <p style="text-align:center; margin-top:15px;">
+            <a href="#" class="group-link"
+               onclick="document.getElementById('inscription').style.display='block'">
+                Créer un compte
+            </a>
+        </p>
+    </div>
+</div>
+
+
+<div id="inscription" style="display:none;">
+    <div class="container" style="max-width:420px; margin-top:60px;">
+        <div class="section">
+            <h1 style="text-align:center;">Inscription</h1>
+
+            <form action="{{ url_for('inscription') }}"
+                  method="POST"
+                  style="display:flex; flex-direction:column; gap:15px;">
+
+                <input type="text" name="pseudonyme" placeholder="Pseudonyme" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="mot_de_passe" placeholder="Mot de passe" required>
+                <input type="password" name="confirmation" placeholder="Confirmation" required>
+
+                <button type="submit">S'inscrire</button>
+            </form>
+
+            <p style="text-align:center; margin-top:15px;">
+                <a href="#" class="group-link"
+                   onclick="document.getElementById('inscription').style.display='none'">
+                    Retour à la connexion
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

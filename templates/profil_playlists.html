@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mes Playlists - {{ pseudonyme }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+    <div class="logo">TheWave</div>
+    <div class="menu">
+        <a href="{{ url_for('accueil') }}">Accueil</a>
+        <a href="{{ url_for('recherche') }}">Recherche</a>
+        <a href="{{ url_for('profil') }}">Profil</a>
+        <a href="{{ url_for('suggestions') }}">Suggestions</a>
+    </div>
+    <a class="logout" href="{{ url_for('deconnexion') }}">Déconnexion</a>
+</nav>
+
+<div class="container">
+    <h1>Mes Playlists - {{ pseudonyme }}</h1>
+
+ 
+    <h2>{% if playlist_a_editer %}Éditer la playlist{% else %}Créer une nouvelle playlist{% endif %}</h2>
+    <form method="POST">
+        {% if playlist_a_editer %}
+            <input type="hidden" name="id_playlist" value="{{ playlist_a_editer[0] }}">
+        {% endif %}
+        <input type="text" name="titre" placeholder="Titre de la playlist" required
+               value="{% if playlist_a_editer %}{{ playlist_a_editer[1] }}{% endif %}">
+        <input type="text" name="description" placeholder="Description"
+               value="{% if playlist_a_editer %}{{ playlist_a_editer[2] }}{% endif %}">
+        <label>
+            Publique <input type="checkbox" name="visibilite" {% if playlist_a_editer and playlist_a_editer[3] %}checked{% endif %}>
+        </label>
+        <button type="submit">{% if playlist_a_editer %}Mettre à jour{% else %}Créer{% endif %}</button>
+    </form>
+
+
+    <h2>Playlists existantes</h2>
+    {% if playlists %}
+    <ul>
+        {% for id, titre, description, visibilite in playlists %}
+        <li>
+            <div>
+                <b>{{ titre }}</b> : {{ description if description else "Pas de description" }}
+                {% if visibilite %}<span style="color:green;">(Publique)</span>{% else %}<span style="color:red;">(Privée)</span>{% endif %}
+            </div>
+            <div class="actions">
+
+                <a href="{{ url_for('profil_playlists', edit_id=id) }}"><button type="button">Éditer</button></a>
+                
+      
+                <form method="POST" action="{{ url_for('supprimer_playlist', id_playlist=id) }}" style="display:inline;">
+                    <button type="submit" style="background-color:#e74c3c;">Supprimer</button>
+                </form>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Vous n’avez pas encore de playlist.</p>
+    {% endif %}
+
+    <a class="back-link" href="{{ url_for('profil') }}">← Retour au profil</a>
+</div>
+
+</body>
+</html>

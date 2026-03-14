@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Album - {{ album[1] }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+    <div class="logo">TheWave</div>
+    <div class="menu">
+        <a href="{{ url_for('accueil') }}">Accueil</a>
+        <a href="{{ url_for('recherche') }}">Recherche</a>
+        <a href="{{ url_for('profil') }}">Profil</a>
+        <a href="{{ url_for('suggestions') }}">Suggestions</a>
+    </div>
+    <a class="logout" href="{{ url_for('deconnexion') }}">Déconnexion</a>
+</nav>
+
+<div class="container">
+
+
+    <div class="section" style="display:flex; gap:25px; align-items:flex-start; flex-wrap:wrap;">
+        {% if album[4] %}
+        <img src="{{ url_for('static', filename=album[4]) }}" alt="Cover de {{ album[1] }}" class="album-cover" style="max-width:250px; border-radius:12px;">
+        {% endif %}
+        <div style="flex:1; min-width:250px;">
+            <h1>{{ album[1] }}</h1>
+            <p><b>Date de parution :</b> {{ album[2] }}</p>
+            {% if album[3] %}
+            <p><b>Description :</b> {{ album[3] }}</p>
+            {% endif %}
+            <a class="btn" href="{{ url_for('ecouter_album', id_album=album[0]) }}" 
+   style="background: #1db954; color: #fff; padding: 12px 25px; border-radius: 8px; font-weight: bold; text-decoration: none; display:inline-block; transition: 0.3s;">
+   ▶ Écouter l'album
+</a>
+        </div>
+    </div>
+
+
+    <div class="section">
+        <h2>Groupes ayant publié cet album</h2>
+        {% if groupes %}
+        <ul>
+            {% for id, nom, genre in groupes %}
+            <li>
+                <a href="{{ url_for('groupe', id_groupe=id) }}">{{ nom }}</a>
+                <span>Genre : <b>{{ genre }}</b></span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Aucun groupe associé.</p>
+        {% endif %}
+    </div>
+
+
+    <div class="section">
+        <h2>Pistes de l'album</h2>
+        {% if pistes %}
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Titre</th>
+                    <th>Durée</th>
+                    <th>Écouter</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for piste in pistes %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><a href="{{ url_for('morceau', id_piste=piste[0]) }}">{{ piste[1] }}</a></td>
+                    <td>{{ piste[2] }}</td>
+                    <td><a href="{{ url_for('morceau', id_piste=piste[0]) }}" class="btn">▶ Écouter</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Aucune piste trouvée pour cet album.</p>
+        {% endif %}
+    </div>
+
+</div>
+
+</body>
+</html>

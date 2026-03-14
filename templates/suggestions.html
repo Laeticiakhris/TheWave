@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Suggestions</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+
+
+<nav>
+    <div class="logo">TheWave</div>
+
+    <div class="menu">
+        <a href="{{ url_for('accueil') }}">Accueil</a>
+        <a href="{{ url_for('recherche') }}">Recherche</a>
+        <a href="{{ url_for('profil') }}">Profil</a>
+        <a href="{{ url_for('suggestions') }}">Suggestions</a>
+    </div>
+
+    <a class="logout" href="{{ url_for('deconnexion') }}">Déconnexion</a>
+</nav>
+
+<div class="container">
+
+    <h1>Suggestions personnalisées pour {{ pseudonyme }}</h1>
+
+    <div class="section">
+        <h2> Artiste que tu écoutes le plus</h2>
+
+        {% if top_art %}
+            <p class="subtitle">Écoutez plus de morceaux de votre artiste préféré :</p>
+            <p><b>{{ top_art[2] }} {{ top_art[1] }}</b> ({{ top_art[3] }} écoutes)</p>
+
+            <ul>
+                {% for t in suggested_tracks %}
+                <li>
+                    <a href="{{ url_for('morceau', id_piste=t[0]) }}">{{ t[1] }}</a>
+                     Album : <a href="{{ url_for('album', id_album=t[2]) }}">{{ t[3] or 'Inconnu' }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+
+        {% else %}
+            <p>Tu n'as pas encore assez écouté de morceaux pour analyser un artiste préféré.</p>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h2> Groupes aimés par des personnes ayant les mêmes goûts que toi</h2>
+
+        {% if suggested_groups %}
+            <ul>
+                {% for g in suggested_groups %}
+                <li>
+                    <a href="{{ url_for('groupe', id_groupe=g[0]) }}">{{ g[1] }}</a>
+                     Popularité : <b>{{ g[2] }}</b>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucun groupe recommandé pour le moment.</p>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h2> Playlists recommandées</h2>
+        <p class="subtitle">Ces playlists contiennent plusieurs morceaux que tu écoutes.</p>
+
+        {% if suggested_playlists %}
+            <ul>
+                {% for pl in suggested_playlists %}
+                <li>
+
+                        <b>{{ pl[1] }}</b>
+                    </a>
+                      par {{ pl[2] }}  
+                    ({{ pl[3] }}  pistes correspondantes)
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucune playlist recommandée pour l'instant.</p>
+        {% endif %}
+    </div>
+
+</div>
+
+</body>
+</html>
